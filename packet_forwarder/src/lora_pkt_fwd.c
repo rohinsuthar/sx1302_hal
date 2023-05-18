@@ -2060,15 +2060,74 @@ void thread_up(void) {
 
             /* Get mote information from current packet (addr, fcnt) */
             /* FHDR - DevAddr */
-            if (p->size >= 8) {
+            if (p->size >= 8) 
+            {
+             //UFR-GW-07 TO UFR-GW-10
+              mote_mhdr  = p->payload[0];
+            FILE *file = fopen("mhdr.txt", "w");
+              if (file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(file, "%x", mote_mhdr);
+               fclose(file);
+             
                 mote_addr  = p->payload[1];
                 mote_addr |= p->payload[2] << 8;
                 mote_addr |= p->payload[3] << 16;
                 mote_addr |= p->payload[4] << 24;
+             
+             FILE *file = fopen("addr.txt", "w");
+              if (file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(file, "%x", mote_addr);
+               fclose(file);
+             
+             //UFR-GW-15 TO UFR-GW-23
+               mote_fctrl  = p->payload[5];
+               mote_foptslen = mote_fctrl & 0x0F;
+             
+             if(mote_foptslen != 0x00)
+             {
+               mote_fopts  = p->payload[8];
+               
+              FILE *file = fopen("cid.txt", "w");
+              if (file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(file, "%x", mote_fopts);
+               fclose(file);
+             }
+                else
+                {
+                  FILE *file = fopen("cid.txt", "w");
+              if (file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(file, "%x", 0x00);
+               fclose(file);
+                }
+                                     
                 /* FHDR - FCnt */
                 mote_fcnt  = p->payload[6];
                 mote_fcnt |= p->payload[7] << 8;
-            } else {
+             
+             //UFR-GW-13 frame counter of terminal
+               FILE *file = fopen("fcnt.txt", "w");
+              if (file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(file, "%x", mote_fcnt);
+               fclose(file);
+            } 
+         
+            else 
+            {
                 mote_addr = 0;
                 mote_fcnt = 0;
             }
