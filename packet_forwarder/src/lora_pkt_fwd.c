@@ -1288,7 +1288,7 @@ static uint16_t crc16(const uint8_t * data, unsigned size) {
         return 0;
     }
 
-    for (i=0; i<size; ++i) {
+    for (i=8; i<size; ++i) {
         x ^= (uint16_t)data[i] << 8;
         for (j=0; j<8; ++j) {
             x = (x & 0x8000) ? (x<<1) ^ crc_poly : (x<<1);
@@ -2761,9 +2761,6 @@ void thread_down(void) {
     }
 */
     /* CRC of the beacon gateway specific part fields */
-    field_crc = crc16((beacon_pkt.payload + 6 + 3), 7 );
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  field_crc;
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc >> 8);
 
     /* JIT queue initialization */
     jit_queue_init(&jit_queue[0]);
@@ -2859,10 +2856,12 @@ void thread_down(void) {
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 24);
 
                     /* calculate CRC */
-                 /*   field_crc1 = crc16(beacon_pkt.payload, 4 + beacon_RFU1_size);
-                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & ftypenum;
-                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >> 8);
-                      */
+                      //CALCULATE CRC FOR BEACON
+                     beacon_pyld_idx = 16;
+                    field_crc = crc16(beacon_pkt.payload , 15);
+                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & field_crc;
+                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc >> 8);
+                      
                  
                  // HERE FRAME TYPE & NUM ARE INSERTED
                     /* Insert beacon packet in JiT queue */
