@@ -2626,8 +2626,9 @@ void thread_down(void) {
     struct lgw_pkt_tx_s beacon_pkt;
     uint8_t beacon_chan;
     uint8_t beacon_loop;
-    size_t beacon_RFU1_size = 0;
-    size_t beacon_RFU2_size = 0;
+ //UFR-GW-31 Beacon Frame changing for the dcaLPWAN
+  //  size_t beacon_RFU1_size = 0;
+ //   size_t beacon_RFU2_size = 0;
     uint8_t beacon_pyld_idx = 0;
     time_t diff_beacon_time;
     struct timespec next_beacon_gps_time; /* gps time of next beacon packet */
@@ -2637,7 +2638,7 @@ void thread_down(void) {
     /* beacon data fields, byte 0 is Least Significant Byte */
     int32_t field_latitude; /* 3 bytes, derived from reference latitude */
     int32_t field_longitude; /* 3 bytes, derived from reference longitude */
-    uint16_t field_crc1, field_crc2;
+    uint16_t ftypenum, field_crc;
 
     /* auto-quit variable */
     uint32_t autoquit_cnt = 0; /* count the number of PULL_DATA sent since the latest PULL_ACK */
@@ -2684,7 +2685,7 @@ void thread_down(void) {
             MSG("ERROR: unsupported bandwidth for beacon\n");
             exit(EXIT_FAILURE);
     }
-    switch (beacon_datarate) {
+ /*   switch (beacon_datarate) {
         case 8:
             beacon_pkt.datarate = DR_LORA_SF8;
             beacon_RFU1_size = 1;
@@ -2706,11 +2707,13 @@ void thread_down(void) {
             beacon_RFU2_size = 3;
             break;
         default:
-            /* should not happen */
+     */
+ /* should not happen */
             MSG("ERROR: unsupported datarate for beacon\n");
             exit(EXIT_FAILURE);
     }
-    beacon_pkt.size = beacon_RFU1_size + 4 + 2 + 7 + beacon_RFU2_size + 2;
+//UFR-GW-31 Beacon Frame Byte Number
+    beacon_pkt.size = 3 + 4 + 2 + 7 + 2;
     beacon_pkt.coderate = CR_LORA_4_5;
     beacon_pkt.invert_pol = false;
     beacon_pkt.preamble = 10;
@@ -2718,13 +2721,15 @@ void thread_down(void) {
     beacon_pkt.no_header = true;
 
     /* network common part beacon fields (little endian) */
-    for (i = 0; i < (int)beacon_RFU1_size; i++) {
+ /* 
+ for (i = 0; i < (int)beacon_RFU1_size; i++) {
         beacon_pkt.payload[beacon_pyld_idx++] = 0x0;
     }
-
+*/
     /* network common part beacon fields (little endian) */
+    beacon_pyld_idx += 3; /* NetID */
     beacon_pyld_idx += 4; /* time (variable), filled later */
-    beacon_pyld_idx += 2; /* crc1 (variable), filled later */
+    beacon_pyld_idx += 2; /* ftype & fnum (variable), filled later */
 
     /* calculate the latitude and longitude that must be publicly reported */
     field_latitude = (int32_t)((reference_coord.lat / 90.0) * (double)(1<<23));
@@ -2749,15 +2754,16 @@ void thread_down(void) {
     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_longitude >>  8);
     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_longitude >> 16);
 
-    /* RFU */
+    /* 
+    //RFU 
     for (i = 0; i < (int)beacon_RFU2_size; i++) {
         beacon_pkt.payload[beacon_pyld_idx++] = 0x0;
     }
-
+*/
     /* CRC of the beacon gateway specific part fields */
-    field_crc2 = crc16((beacon_pkt.payload + 6 + beacon_RFU1_size), 7 + beacon_RFU2_size);
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  field_crc2;
-    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc2 >> 8);
+    field_crc = crc16((beacon_pkt.payload + 6 + 3), 7 );
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  field_crc;
+    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc >> 8);
 
     /* JIT queue initialization */
     jit_queue_init(&jit_queue[0]);
@@ -2846,17 +2852,19 @@ void thread_down(void) {
                     beacon_pkt.freq_hz = beacon_freq_hz + (beacon_chan * beacon_freq_step);
 
                     /* load time in beacon payload */
-                    beacon_pyld_idx = beacon_RFU1_size;
+                    beacon_pyld_idx = 3;
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  next_beacon_gps_time.tv_sec;
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >>  8);
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 16);
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 24);
 
                     /* calculate CRC */
-                    field_crc1 = crc16(beacon_pkt.payload, 4 + beacon_RFU1_size); /* CRC for the network common part */
-                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & field_crc1;
-                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc1 >> 8);
-
+                 /*   field_crc1 = crc16(beacon_pkt.payload, 4 + beacon_RFU1_size);
+                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & ftypenum;
+                    beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >> 8);
+                      */
+                 
+                 // HERE FRAME TYPE & NUM ARE INSERTED
                     /* Insert beacon packet in JiT queue */
                     pthread_mutex_lock(&mx_concent);
                     lgw_get_instcnt(&current_concentrator_time);
