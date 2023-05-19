@@ -215,7 +215,7 @@ static uint32_t meas_nb_tx_rejected_too_early = 0; /* count packets were TX requ
 static uint32_t meas_nb_beacon_queued = 0; /* count beacon inserted in jit queue */
 static uint32_t meas_nb_beacon_sent = 0; /* count beacon actually sent to concentrator */
 static uint32_t meas_nb_beacon_rejected = 0; /* count beacon rejected for queuing */
-
+static uint16_t ftypenum = 0;
 static pthread_mutex_t mx_meas_gps = PTHREAD_MUTEX_INITIALIZER; /* control access to the GPS statistics */
 static bool gps_coord_valid; /* could we get valid GPS coordinates ? */
 static struct coord_s meas_gps_coord; /* GPS position of the gateway */
@@ -2638,7 +2638,7 @@ void thread_down(void) {
     /* beacon data fields, byte 0 is Least Significant Byte */
     int32_t field_latitude; /* 3 bytes, derived from reference latitude */
     int32_t field_longitude; /* 3 bytes, derived from reference longitude */
-    uint16_t ftypenum, field_crc;
+    uint16_t field_crc;
 
     /* auto-quit variable */
     uint32_t autoquit_cnt = 0; /* count the number of PULL_DATA sent since the latest PULL_ACK */
@@ -2855,7 +2855,16 @@ void thread_down(void) {
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 16);
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 24);
 
-                    /* calculate CRC */
+                 
+                      //FTYPE NUM FEATURE
+                 beacon_pyld_idx = 7;
+                var_fnum =  ftypenum & 0xE000;
+                fnum = var_fnum | beacon_number_tx_mb;
+                ftypenum = fnum;
+                beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
+                beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8);  
+                    
+                 /* calculate CRC */
                       //CALCULATE CRC FOR BEACON
                      beacon_pyld_idx = 16;
                     field_crc = crc16(beacon_pkt.payload , 15);
