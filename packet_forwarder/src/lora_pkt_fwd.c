@@ -2866,7 +2866,7 @@ void thread_down(void) {
                       //FTYPE NUM FEATURE
                  beacon_pyld_idx = 7;
                 var_fnum =  ftypenum & 0xE000;
-                fnum = var_fnum | beacon_number_tx_mb;
+                fnum = var_fnum;
                 ftypenum = fnum;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8);  
