@@ -216,6 +216,8 @@ static uint32_t meas_nb_beacon_queued = 0; /* count beacon inserted in jit queue
 static uint32_t meas_nb_beacon_sent = 0; /* count beacon actually sent to concentrator */
 static uint32_t meas_nb_beacon_rejected = 0; /* count beacon rejected for queuing */
 static uint16_t ftypenum = 0;
+static uint16_t var_fnum = 0;
+static uint16_t fnum = 0;
 static pthread_mutex_t mx_meas_gps = PTHREAD_MUTEX_INITIALIZER; /* control access to the GPS statistics */
 static bool gps_coord_valid; /* could we get valid GPS coordinates ? */
 static struct coord_s meas_gps_coord; /* GPS position of the gateway */
