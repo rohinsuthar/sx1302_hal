@@ -1993,7 +1993,9 @@ void thread_up(void) {
     uint32_t mote_addr = 0;
     uint16_t mote_fcnt = 0;
     uint8_t mote_mhdr = 0;
-    
+    uint8_t mote_fctrl  = 0;
+    uint8_t mote_foptslen = 0;
+     uint8_t mote_fopts = 0;
 
     /* set upstream socket RX timeout */
     i = setsockopt(sock_up, SOL_SOCKET, SO_RCVTIMEO, (void *)&push_timeout_half, sizeof push_timeout_half);
@@ -2079,13 +2081,13 @@ void thread_up(void) {
                 mote_addr |= p->payload[3] << 16;
                 mote_addr |= p->payload[4] << 24;
              
-             FILE *file = fopen("addr.txt", "w");
-              if (file == NULL)
+             FILE *addr_file = fopen("addr.txt", "w");
+              if (addr_file == NULL)
               {            
                  return 1;
               }  
-               fprintf(file, "%x", mote_addr);
-               fclose(file);
+               fprintf(addr_file, "%x", mote_addr);
+               fclose(addr_file);
              
              //UFR-GW-15 TO UFR-GW-23
                mote_fctrl  = p->payload[5];
@@ -2119,13 +2121,13 @@ void thread_up(void) {
                 mote_fcnt |= p->payload[7] << 8;
              
              //UFR-GW-13 frame counter of terminal
-               FILE *file = fopen("fcnt.txt", "w");
-              if (file == NULL)
+               FILE *fcnt_file = fopen("fcnt.txt", "w");
+              if (fcnt_file == NULL)
               {            
                  return 1;
               }  
-               fprintf(file, "%x", mote_fcnt);
-               fclose(file);
+               fprintf(fcnt_file, "%x", mote_fcnt);
+               fclose(fcnt_file);
             } 
          
             else 
@@ -2768,9 +2770,9 @@ void thread_down(void) {
     jit_queue_init(&jit_queue[0]);
     jit_queue_init(&jit_queue[1]);
 
-    while (!exit_sig && !quit_sig) {
-
-        /* auto-quit if the threshold is crossed */
+    while(!exit_sig && !quit_sig)
+    {
+       /* auto-quit if the threshold is crossed */
         if ((autoquit_threshold > 0) && (autoquit_cnt >= autoquit_threshold)) {
             exit_sig = true;
             MSG("INFO: [down] the last %u PULL_DATA were not ACKed, exiting application\n", autoquit_threshold);
