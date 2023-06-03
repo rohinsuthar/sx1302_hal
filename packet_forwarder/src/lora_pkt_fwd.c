@@ -1992,6 +1992,8 @@ void thread_up(void) {
     /* mote info variables */
     uint32_t mote_addr = 0;
     uint16_t mote_fcnt = 0;
+    uint8_t mote_mhdr = 0;
+    
 
     /* set upstream socket RX timeout */
     i = setsockopt(sock_up, SOL_SOCKET, SO_RCVTIMEO, (void *)&push_timeout_half, sizeof push_timeout_half);
@@ -2064,13 +2066,13 @@ void thread_up(void) {
             {
              //UFR-GW-07 TO UFR-GW-10
               mote_mhdr  = p->payload[0];
-            FILE *file = fopen("mhdr.txt", "w");
-              if (file == NULL)
+            FILE *mhdr_file = fopen("mhdr.txt", "w");
+              if (mhdr_file == NULL)
               {            
                  return 1;
               }  
-               fprintf(file, "%x", mote_mhdr);
-               fclose(file);
+               fprintf(mhdr_file, "%x", mote_mhdr);
+               fclose(mhdr_file);
              
                 mote_addr  = p->payload[1];
                 mote_addr |= p->payload[2] << 8;
