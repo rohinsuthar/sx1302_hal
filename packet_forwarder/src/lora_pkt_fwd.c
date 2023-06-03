@@ -2097,23 +2097,23 @@ void thread_up(void) {
              {
                mote_fopts  = p->payload[8];
                
-              FILE *file = fopen("cid.txt", "w");
-              if (file == NULL)
+              FILE *cid_file = fopen("cid.txt", "w");
+              if (cid_file == NULL)
               {            
                  return 1;
               }  
-               fprintf(file, "%x", mote_fopts);
-               fclose(file);
+               fprintf(cid_file, "%x", mote_fopts);
+               fclose(cid_file);
              }
                 else
                 {
-                  FILE *file = fopen("cid.txt", "w");
-              if (file == NULL)
+                  FILE *cid_file = fopen("cid.txt", "w");
+              if (cid_file == NULL)
               {            
                  return 1;
               }  
-               fprintf(file, "%x", 0x00);
-               fclose(file);
+               fprintf(cid_file, "%x", 0x00);
+               fclose(cid_file);
                 }
                                      
                 /* FHDR - FCnt */
