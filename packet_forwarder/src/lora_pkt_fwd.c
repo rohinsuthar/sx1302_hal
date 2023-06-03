@@ -2711,11 +2711,12 @@ void thread_down(void) {
             beacon_RFU2_size = 3;
             break;
         default:
-     */
- /* should not happen */
+    
+ 
             MSG("ERROR: unsupported datarate for beacon\n");
             exit(EXIT_FAILURE);
-    }
+    }    */
+ 
 //UFR-GW-31 Beacon Frame Byte Number
     beacon_pkt.size = 3 + 4 + 2 + 7 + 2;
     beacon_pkt.coderate = CR_LORA_4_5;
