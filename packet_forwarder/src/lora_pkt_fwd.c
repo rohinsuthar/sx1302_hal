@@ -1824,6 +1824,14 @@ int main(int argc, char ** argv)
         printf("# CRC_OK: %.2f%%, CRC_FAIL: %.2f%%, NO_CRC: %.2f%%\n", 100.0 * rx_ok_ratio, 100.0 * rx_bad_ratio, 100.0 * rx_nocrc_ratio);
         printf("# RF packets forwarded: %u (%u bytes)\n", cp_up_pkt_fwd, cp_up_payload_byte);
         printf("# PUSH_DATA datagrams sent: %u (%u bytes)\n", cp_up_dgram_sent, cp_up_network_byte);
+             FILE *pd_file = fopen("pd.txt", "w");
+              if (pd_file == NULL)
+              {            
+                 return 1;
+              }  
+               printf("ffffffffffffffffffffffff");
+               fprintf(pd_file, "%u", cp_up_dgram_sent);
+               fclose(pd_file);
         printf("# PUSH_DATA acknowledged: %.2f%%\n", 100.0 * up_ack_ratio);
         printf("### [DOWNSTREAM] ###\n");
         printf("# PULL_DATA sent: %u (%.2f%% acknowledged)\n", cp_dw_pull_sent, 100.0 * dw_ack_ratio);
