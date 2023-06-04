@@ -1042,6 +1042,13 @@ static int parse_gateway_configuration(const char * conf_file) {
         sscanf(str, "%llx", &ull);
         lgwm = ull;
         MSG("INFO: gateway MAC address is configured to %016llX\n", ull);
+     FILE *gw_file = fopen("mac_addr.txt", "w");
+              if (gw_file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(gw_file, "%016llX", ull);
+               fclose(gw_file);
     }
 
     /* server hostname or IP address (optional) */
