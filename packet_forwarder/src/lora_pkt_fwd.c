@@ -1297,7 +1297,7 @@ static uint16_t crc16(const uint8_t * data, unsigned size) {
         return 0;
     }
 
-    for (i=8; i<size; ++i) {
+    for (i=7; i<size; ++i) {
         x ^= (uint16_t)data[i] << 8;
         for (j=0; j<8; ++j) {
             x = (x & 0x8000) ? (x<<1) ^ crc_poly : (x<<1);
@@ -2889,7 +2889,7 @@ void thread_down(void) {
                  /* calculate CRC */
                       //CALCULATE CRC FOR BEACON
                      beacon_pyld_idx = 16;
-                    field_crc = crc16(beacon_pkt.payload , 15);
+                    field_crc = crc16(beacon_pkt.payload , 16);
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & field_crc;
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (field_crc >> 8);
                       
