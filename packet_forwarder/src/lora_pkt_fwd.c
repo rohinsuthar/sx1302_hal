@@ -1057,6 +1057,14 @@ static int parse_gateway_configuration(const char * conf_file) {
         strncpy(serv_addr, str, sizeof serv_addr);
         serv_addr[sizeof serv_addr - 1] = '\0'; /* ensure string termination */
         MSG("INFO: server hostname or IP address is configured to \"%s\"\n", serv_addr);
+         FILE *sv_file = fopen("sv_addr.txt", "w");
+              if (sv_file == NULL)
+              {            
+                 return 1;
+              }  
+               fprintf(sv_file, "%s", serv_addr);
+               fclose(sv_file);
+    }
     }
 
     /* get up and down ports (optional) */
