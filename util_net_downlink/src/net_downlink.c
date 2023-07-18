@@ -58,7 +58,7 @@
 
 #define ARRAY_SIZE(a)   (sizeof(a) / sizeof((a)[0]))
 
-#define PROTOCOL_VERSION    2
+#define PROTOCOL_VERSION    10
 
 /* Get a particular bit value from a byte */
 /* b: any byte
