@@ -2885,18 +2885,12 @@ void thread_down(void) {
                     beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (next_beacon_gps_time.tv_sec >> 24);
 
                  
-                      //FTYPE NUM FEATURE
+                      //FTYPE NUM FEATURE DEFINE THE BEACON TIMING AND ALSO THE FTYPENUM FIELD
                  beacon_pyld_idx = 7;
                 var_fnum =  ftypenum & 0x1FFF;
                 fnum = var_fnum + 1;
                 ftype = ftypenum & 0xE000;
-                switch(ftype)
-                 {
-                  case 0x0000:
-                  
-                  
-                 }
-                 
+                
                 ftypenum |= fnum;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8);  
