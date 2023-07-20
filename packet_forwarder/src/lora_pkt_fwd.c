@@ -260,7 +260,7 @@ static uint32_t nb_pkt_received_fsk = 0;
 
 static struct lgw_conf_debug_s debugconf;
 static uint32_t nb_pkt_received_ref[16];
-
+static bconfinfo_t bic;
 /* Interface type */
 static lgw_com_type_t com_type = LGW_COM_SPI;
 
@@ -1157,20 +1157,53 @@ static int parse_gateway_configuration(const char * conf_file) {
  switch(ftype)
   {
    case 0x0000:
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
+
 
    case 0x2000:
-
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
+   
    case 0x4000:
-
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
+   
    case 0x6000:
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
 
    case 0x8000:
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
 
    case 0xA000:
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
 
    case 0xC000:
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
 
    case 0xE000:
+   beacon_period = 128;
+   bic.BEACON_GUARD = 3000000;
+   bic.BEACON_RESERVED = 2120000;
+   break;
    
    
   }
