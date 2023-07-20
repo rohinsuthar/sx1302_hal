@@ -25,6 +25,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 #include "trace.h"
 #include "jitqueue.h"
+#include "beacon_frame_info.h"
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
@@ -36,9 +37,10 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #define TX_JIT_DELAY            40000   /* Pre-delay to program packet for TX in microseconds */
 #define TX_MAX_ADVANCE_DELAY    ((JIT_NUM_BEACON_IN_QUEUE + 1) * 128 * 1E6) /* Maximum advance delay accepted for a TX packet, compared to current time */
 
-#define BEACON_GUARD            3000000 /* Interval where no ping slot can be placed,
-                                            to ensure beacon can be sent */
-#define BEACON_RESERVED         2120000 /* Time on air of the beacon, with some margin */
+static bconfinfo_t bic;
+
+bic.BEACON_GUARD = 3000000;
+bic.BEACON_RESERVED = 2120000;
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE VARIABLES (GLOBAL) ------------------------------------------- */
