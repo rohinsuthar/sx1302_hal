@@ -157,8 +157,8 @@ enum jit_error_e jit_enqueue(struct jit_queue_s *queue, uint32_t time_us, struct
             break;
         case JIT_PKT_TYPE_BEACON:
             /* As defined in LoRaWAN spec */
-            packet_pre_delay = TX_START_DELAY + BEACON_GUARD + TX_JIT_DELAY;
-            packet_post_delay = BEACON_RESERVED;
+            packet_pre_delay = TX_START_DELAY + bic.BEACON_GUARD + TX_JIT_DELAY;
+            packet_post_delay = bic.BEACON_RESERVED;
             break;
         default:
             break;
