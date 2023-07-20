@@ -1153,10 +1153,31 @@ static int parse_gateway_configuration(const char * conf_file) {
         }
     }
 
+ switch(ftype)
+  {
+   case 0x0000:
+
+   case 0x2000:
+
+   case 0x4000:
+
+   case 0x6000:
+
+   case 0x8000:
+
+   case 0xA000:
+
+   case 0xC000:
+
+   case 0xE000:
+   
+   
+  }
     /* Beacon signal period (optional) */
-    val = json_object_get_value(conf_obj, "beacon_period");
+  /*  val = json_object_get_value(conf_obj, "beacon_period");
     if (val != NULL) {
         beacon_period = (uint32_t)json_value_get_number(val);
+        */
         if ((beacon_period > 0) && (beacon_period < 6)) {
             MSG("ERROR: invalid configuration for Beacon period, must be >= 6s\n");
             return -1;
