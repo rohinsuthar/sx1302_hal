@@ -38,10 +38,10 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #define TX_MAX_ADVANCE_DELAY    ((JIT_NUM_BEACON_IN_QUEUE + 1) * 128 * 1E6) /* Maximum advance delay accepted for a TX packet, compared to current time */
 
 static bconfinfo_t bic;
-
+/*
 bic.BEACON_GUARD = 3000000;
 bic.BEACON_RESERVED = 2120000;
-
+*/
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE VARIABLES (GLOBAL) ------------------------------------------- */
 static pthread_mutex_t mx_jit_queue = PTHREAD_MUTEX_INITIALIZER; /* control access to JIT queue */
