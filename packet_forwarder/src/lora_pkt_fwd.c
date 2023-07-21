@@ -2943,11 +2943,14 @@ void thread_down(void) {
                  
                       //FTYPE NUM FEATURE DEFINE THE BEACON TIMING AND ALSO THE FTYPENUM FIELD
                  beacon_pyld_idx = 7;
-                var_fnum =  ftypenum & 0x1FFF;
-                fnum = var_fnum + 1;
-                ftype = ftypenum & 0xE000;
-                
-                ftypenum |= fnum;
+               	var_fnum =  ftypenum & 0x1FFF;	
+               	fnum = var_fnum + 1;
+	                if(fnum > 7199)
+                 {
+                   fnum = 0;
+                 }
+                  ftype = (ftypenum & 0xE000);
+	                ftypenum = ftype | fnum;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8);  
                     
