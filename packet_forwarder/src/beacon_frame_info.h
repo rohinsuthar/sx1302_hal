@@ -5,11 +5,11 @@
 
 #include <stdint.h>  
 
-typedef struct sbconfinfo{
+typedef struct sBconfinfo{
 uint32_t BEACON_GUARD; /* Interval where no ping slot can be placed,
                                             to ensure beacon can be sent */
 uint32_t BEACON_RESERVED;/* Time on air of the beacon, with some margin */
-}bconfinfo_t;
+}Bconfinfo_t;
 
 
 #endif // MY_HEADER_H
