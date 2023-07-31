@@ -85,7 +85,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #define FETCH_SLEEP_MS      10          /* nb of ms waited when a fetch return no packets */
 #define BEACON_POLL_MS      50          /* time in ms between polling of beacon TX status */
 
-#define PROTOCOL_VERSION    10           /* v1.6 */
+#define PROTOCOL_VERSION    0x0A           /* v1.6 */
 #define PROTOCOL_JSON_RXPK_FRAME_FORMAT 1
 
 #define XERR_INIT_AVG       16          /* nb of measurements the XTAL correction is averaged on as initial value */
