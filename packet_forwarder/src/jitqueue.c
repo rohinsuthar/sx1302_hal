@@ -37,7 +37,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #define TX_JIT_DELAY            40000   /* Pre-delay to program packet for TX in microseconds */
 #define TX_MAX_ADVANCE_DELAY    ((JIT_NUM_BEACON_IN_QUEUE + 1) * 128 * 1E6) /* Maximum advance delay accepted for a TX packet, compared to current time */
 
-static bconfinfo_t bic;
+static Bconfinfo_t bic;
 /*
 bic.BEACON_GUARD = 3000000;
 bic.BEACON_RESERVED = 2120000;
