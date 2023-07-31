@@ -260,7 +260,7 @@ static uint32_t nb_pkt_received_fsk = 0;
 
 static struct lgw_conf_debug_s debugconf;
 static uint32_t nb_pkt_received_ref[16];
-static bconfinfo_t bic;
+static Bconfinfo_t bic;
 /* Interface type */
 static lgw_com_type_t com_type = LGW_COM_SPI;
 
