@@ -6,9 +6,9 @@
 #include <stdint.h>  
 
 typedef struct sbconfinfo{
-uint32_t BEACON_GUARD = 3000000; /* Interval where no ping slot can be placed,
+uint32_t BEACON_GUARD; /* Interval where no ping slot can be placed,
                                             to ensure beacon can be sent */
-uint32_t BEACON_RESERVED = 2120000;/* Time on air of the beacon, with some margin */
+uint32_t BEACON_RESERVED;/* Time on air of the beacon, with some margin */
 }bconfinfo_t;
 
 
