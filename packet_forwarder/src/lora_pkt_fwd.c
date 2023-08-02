@@ -1190,8 +1190,8 @@ static int parse_gateway_configuration(const char * conf_file) {
 
    case 0xA000:
 	beacon_period = 600;
-	bic.BEACON_GUARD = 3000000;
-	bic.BEACON_RESERVED = 2120000;
+	bic.BEACON_GUARD = 2000000;
+	bic.BEACON_RESERVED = 2000000;
 	break;
 
    default:
@@ -2937,12 +2937,7 @@ void thread_down(void) {
                  
                       //FTYPE NUM FEATURE DEFINE THE BEACON TIMING AND ALSO THE FTYPENUM FIELD
                  beacon_pyld_idx = 7;
-               	var_fnum =  ftypenum & 0x1FFF;	
-               	fnum = var_fnum + 1;
-	                if(fnum > 7199)
-                 {
-                   fnum = 0;
-                 }
+               	 fnum = framenumber & 0x1FFF;
                   ftype = (ftypenum & 0xE000);
 	          ftypenum = ftype | fnum;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
@@ -3433,6 +3428,7 @@ void thread_jit(void) {
                             /* Update statistics */
                             pthread_mutex_lock(&mx_meas_dw);
                             meas_nb_beacon_sent += 1;
+			    framenumber += 1;
                             pthread_mutex_unlock(&mx_meas_dw);
                             MSG("INFO: Beacon dequeued (count_us=%u)\n", pkt.count_us);
                         }
