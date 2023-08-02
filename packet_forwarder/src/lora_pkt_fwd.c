@@ -3429,6 +3429,10 @@ void thread_jit(void) {
                             pthread_mutex_lock(&mx_meas_dw);
                             meas_nb_beacon_sent += 1;
 			    framenumber += 1;
+			    if(framenumber > 7199)
+			    {
+				    framenumber = 0;
+			    }
                             pthread_mutex_unlock(&mx_meas_dw);
                             MSG("INFO: Beacon dequeued (count_us=%u)\n", pkt.count_us);
                         }
