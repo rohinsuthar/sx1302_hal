@@ -1158,38 +1158,38 @@ static int parse_gateway_configuration(const char * conf_file) {
  switch(ftype)
   {
    case 0x0000:
-   	beacon_period = 120;
+   	beacon_period = 120000000;
    	bic.BEACON_GUARD = 2000000;
    	bic.BEACON_RESERVED = 2000000;
    	break;
 
 
    case 0x2000:
-   	beacon_period = 120;
+   	beacon_period = 120000000;
    	bic.BEACON_GUARD = 2000000;
    	bic.BEACON_RESERVED = 2000000;
    	break;
    
    case 0x4000:
-	beacon_period = 300;
+	beacon_period = 300000000;
    	bic.BEACON_GUARD = 2000000;
    	bic.BEACON_RESERVED = 2000000;
    	break;
    
    case 0x6000:
-	beacon_period = 300;
+	beacon_period = 300000000;
    	bic.BEACON_GUARD = 2000000;
    	bic.BEACON_RESERVED = 2000000;
    	break;
 
    case 0x8000:
-        beacon_period = 600;
+        beacon_period = 600000000;
    	bic.BEACON_GUARD = 2000000;
    	bic.BEACON_RESERVED = 2000000;
    	break;
 
    case 0xA000:
-	beacon_period = 600;
+	beacon_period = 600000000;
 	bic.BEACON_GUARD = 2000000;
 	bic.BEACON_RESERVED = 2000000;
 	break;
