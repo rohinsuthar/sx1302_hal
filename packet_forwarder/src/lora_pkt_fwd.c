@@ -215,6 +215,7 @@ static uint32_t meas_nb_tx_rejected_too_late = 0; /* count packets were TX reque
 static uint32_t meas_nb_tx_rejected_too_early = 0; /* count packets were TX request were rejected because timestamp is too much in advance */
 static uint32_t meas_nb_beacon_queued = 0; /* count beacon inserted in jit queue */
 static uint32_t meas_nb_beacon_sent = 0; /* count beacon actually sent to concentrator */
+static uint16_t framenumber = 0;
 static uint32_t meas_nb_beacon_rejected = 0; /* count beacon rejected for queuing */
 static uint16_t ftypenum = 0;
 static uint16_t ftype = 0;
@@ -1157,55 +1158,48 @@ static int parse_gateway_configuration(const char * conf_file) {
  switch(ftype)
   {
    case 0x0000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
+   	beacon_period = 120;
+   	bic.BEACON_GUARD = 2000000;
+   	bic.BEACON_RESERVED = 2000000;
+   	break;
 
 
    case 0x2000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
+   	beacon_period = 120;
+   	bic.BEACON_GUARD = 2000000;
+   	bic.BEACON_RESERVED = 2000000;
+   	break;
    
    case 0x4000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
+	beacon_period = 300;
+   	bic.BEACON_GUARD = 2000000;
+   	bic.BEACON_RESERVED = 2000000;
+   	break;
    
    case 0x6000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
+	beacon_period = 300;
+   	bic.BEACON_GUARD = 2000000;
+   	bic.BEACON_RESERVED = 2000000;
+   	break;
 
    case 0x8000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
+        beacon_period = 600;
+   	bic.BEACON_GUARD = 2000000;
+   	bic.BEACON_RESERVED = 2000000;
+   	break;
 
    case 0xA000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
+	beacon_period = 600;
+	bic.BEACON_GUARD = 3000000;
+	bic.BEACON_RESERVED = 2120000;
+	break;
 
-   case 0xC000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
-
-   case 0xE000:
-   beacon_period = 128;
-   bic.BEACON_GUARD = 3000000;
-   bic.BEACON_RESERVED = 2120000;
-   break;
-   
-   
+   default:
+	beacon_period = 120;
+	bic.BEACON_GUARD = 2000000;
+	bic.BEACON_RESERVED = 2000000;
+	break;	  
+     
   }
     /* Beacon signal period (optional) */
   /*  val = json_object_get_value(conf_obj, "beacon_period");
@@ -2950,7 +2944,7 @@ void thread_down(void) {
                    fnum = 0;
                  }
                   ftype = (ftypenum & 0xE000);
-	                ftypenum = ftype | fnum;
+	          ftypenum = ftype | fnum;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
                 beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8);  
                     
