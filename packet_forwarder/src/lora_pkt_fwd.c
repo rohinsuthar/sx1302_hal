@@ -1195,7 +1195,7 @@ static int parse_gateway_configuration(const char * conf_file) {
 	break;
 
    default:
-	beacon_period = 120;
+	beacon_period = 120000000;
 	bic.BEACON_GUARD = 2000000;
 	bic.BEACON_RESERVED = 2000000;
 	break;	  
