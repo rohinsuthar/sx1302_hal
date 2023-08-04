@@ -1210,7 +1210,7 @@ static int parse_gateway_configuration(const char * conf_file) {
         } else {
             MSG("INFO: Beaconing period is configured to %u seconds\n", beacon_period);
         }
-   
+    }
 
     /* Beacon TX frequency (optional) */
     val = json_object_get_value(conf_obj, "beacon_freq_hz");
