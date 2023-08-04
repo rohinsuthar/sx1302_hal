@@ -25,7 +25,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 #include "trace.h"
 #include "jitqueue.h"
-#include "beacon_frame_info.h"
+
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
