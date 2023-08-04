@@ -37,11 +37,11 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #define TX_JIT_DELAY            40000   /* Pre-delay to program packet for TX in microseconds */
 #define TX_MAX_ADVANCE_DELAY    ((JIT_NUM_BEACON_IN_QUEUE + 1) * 128 * 1E6) /* Maximum advance delay accepted for a TX packet, compared to current time */
 
-static Bconfinfo_t bic;
-/*
-bic.BEACON_GUARD = 3000000;
-bic.BEACON_RESERVED = 2120000;
-*/
+//static Bconfinfo_t bic;
+
+#define BEACON_GUARD     2000000;
+#define BEACON_RESERVED  2000000;
+
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE VARIABLES (GLOBAL) ------------------------------------------- */
 static pthread_mutex_t mx_jit_queue = PTHREAD_MUTEX_INITIALIZER; /* control access to JIT queue */
@@ -157,8 +157,8 @@ enum jit_error_e jit_enqueue(struct jit_queue_s *queue, uint32_t time_us, struct
             break;
         case JIT_PKT_TYPE_BEACON:
             /* As defined in LoRaWAN spec */
-            packet_pre_delay = TX_START_DELAY + bic.BEACON_GUARD + TX_JIT_DELAY;
-            packet_post_delay = bic.BEACON_RESERVED;
+            packet_pre_delay = TX_START_DELAY + BEACON_GUARD + TX_JIT_DELAY;
+            packet_post_delay = BEACON_RESERVED;
             break;
         default:
             break;
