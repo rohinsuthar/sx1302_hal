@@ -2763,33 +2763,31 @@ void thread_down(void) {
             MSG("ERROR: unsupported bandwidth for beacon\n");
             exit(EXIT_FAILURE);
     }
- /*   switch (beacon_datarate) {
+    switch (beacon_datarate) {
         case 8:
             beacon_pkt.datarate = DR_LORA_SF8;
-            beacon_RFU1_size = 1;
-            beacon_RFU2_size = 3;
+            //beacon_RFU1_size = 1;
+            //beacon_RFU2_size = 3;
             break;
         case 9:
-            beacon_pkt.datarate = DR_LORA_SF9;
-            beacon_RFU1_size = 2;
-            beacon_RFU2_size = 0;
+            //beacon_pkt.datarate = DR_LORA_SF9;
+            //beacon_RFU1_size = 2;
+            //beacon_RFU2_size = 0;
             break;
         case 10:
             beacon_pkt.datarate = DR_LORA_SF10;
-            beacon_RFU1_size = 3;
-            beacon_RFU2_size = 1;
+            //beacon_RFU1_size = 3;
+            //beacon_RFU2_size = 1;
             break;
         case 12:
             beacon_pkt.datarate = DR_LORA_SF12;
-            beacon_RFU1_size = 5;
-            beacon_RFU2_size = 3;
+            //beacon_RFU1_size = 5;
+            //beacon_RFU2_size = 3;
             break;
-        default:
-    
- 
-            MSG("ERROR: unsupported datarate for beacon\n");
+        default: 
+ 	    MSG("ERROR: unsupported datarate for beacon\n");
             exit(EXIT_FAILURE);
-    }    */
+    } 
  
 //UFR-GW-31 Beacon Frame Byte Number
     beacon_pkt.size = 3 + 4 + 2 + 7 + 2;
