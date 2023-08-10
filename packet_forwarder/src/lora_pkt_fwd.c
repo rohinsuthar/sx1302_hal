@@ -1154,7 +1154,7 @@ static int parse_gateway_configuration(const char * conf_file) {
         }
     }
 
-/* switch(ftype)
+ switch(ftype)
   {
    case 0x0000:
    	beacon_period = 120000000;
@@ -1199,10 +1199,10 @@ static int parse_gateway_configuration(const char * conf_file) {
 	bic.BEACON_RESERVED = 2000000;
 	break;	  
      
-  }*/
+  }
     /* Beacon signal period (optional) */
-    val = json_object_get_value(conf_obj, "beacon_period");
-    if (val != NULL) {
+   // val = json_object_get_value(conf_obj, "beacon_period");
+   // if (val != NULL) {
         beacon_period = (uint32_t)json_value_get_number(val);
         if ((beacon_period > 0) && (beacon_period < 6)) {
             MSG("ERROR: invalid configuration for Beacon period, must be >= 6s\n");
@@ -1210,7 +1210,7 @@ static int parse_gateway_configuration(const char * conf_file) {
         } else {
             MSG("INFO: Beaconing period is configured to %u seconds\n", beacon_period);
         }
-    }
+ // }
 
     /* Beacon TX frequency (optional) */
     val = json_object_get_value(conf_obj, "beacon_freq_hz");
