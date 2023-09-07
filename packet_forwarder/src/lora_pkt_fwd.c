@@ -2936,8 +2936,8 @@ void thread_down(void) {
                	 fnum = framenumber & 0x1FFF;
                   ftype = (ftypenum & 0xE000);
 	          ftypenum = ftype | fnum;
-                beacon_pkt.payload[beacon_pyld_idx++] = 0xFF &  ftypenum ;
-                beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8);  
+                beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & (ftypenum >>  8) ;
+                beacon_pkt.payload[beacon_pyld_idx++] = 0xFF & ftypenum;  
                     
                  /* calculate CRC */
                       //CALCULATE CRC FOR BEACON
